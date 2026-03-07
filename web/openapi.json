@@ -471,7 +471,7 @@
             "type": "string"
           },
           "key": {
-            "description": "Full API key \u2014 shown once, store securely",
+            "description": "Full API key — shown once, store securely",
             "type": "string"
           }
         },
@@ -2182,7 +2182,7 @@
     }
   },
   "info": {
-    "description": "Open Container Initiative Dex \u2014 SBOM metadata management service",
+    "description": "Open Container Initiative Dex — SBOM metadata management service",
     "title": "OCIDex API",
     "version": "1.0.0"
   },
@@ -2298,6 +2298,16 @@
             "name": "name",
             "schema": {
               "description": "Filter by artifact name",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter to artifacts with sufficiently enriched SBOMs; pass 'false' to include all (default: true)",
+            "explode": false,
+            "in": "query",
+            "name": "sufficient",
+            "schema": {
+              "description": "Filter to artifacts with sufficiently enriched SBOMs; pass 'false' to include all (default: true)",
               "type": "string"
             }
           }
