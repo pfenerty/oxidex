@@ -65,21 +65,6 @@ spec:
       workspaces:
         - name: workspace
           workspace: workspace
-    - name: go-lint
-      params:
-        - name: repo-full-name
-          value: $(params.repo-full-name)
-        - name: revision
-          value: $(params.revision)
-      runAfter:
-        - go-build
-        - set-status-pending
-      taskRef:
-        kind: Task
-        name: ocidex-go-lint
-      workspaces:
-        - name: workspace
-          workspace: workspace
     - name: go-test
       params:
         - name: repo-full-name

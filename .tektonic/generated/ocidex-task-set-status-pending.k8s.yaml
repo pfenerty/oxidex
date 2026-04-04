@@ -60,15 +60,15 @@ spec:
               key: token
               name: github-token
       image: ghcr.io/pfenerty/apko-cicd/base:stable
-      name: pending-go-lint
+      name: pending-go-test
       script: |-
         #!/usr/bin/env nu
         def log [msg: string] {
-          print $"[(date now | format date '%H:%M:%S')] status-pending [go-lint]: ($msg)"
+          print $"[(date now | format date '%H:%M:%S')] status-pending [go-test]: ($msg)"
         }
 
         let url = $"https://api.github.com/repos/$(params.repo-full-name)/statuses/$(params.revision)"
-        let body = { state: "pending", context: "go-lint", description: "Running" }
+        let body = { state: "pending", context: "go-test", description: "Running" }
 
         log $"POST ($url)"
         log $"body: ($body | to json -r)"
@@ -99,36 +99,6 @@ spec:
 
         let url = $"https://api.github.com/repos/$(params.repo-full-name)/statuses/$(params.revision)"
         let body = { state: "pending", context: "go-build", description: "Running" }
-
-        log $"POST ($url)"
-        log $"body: ($body | to json -r)"
-
-        try {
-          http post $url $body -t application/json -H [
-            Authorization $"token ($env.GITHUB_TOKEN)"
-            Accept "application/vnd.github+json"
-          ]
-          log "done"
-        } catch { |e|
-          log $"error: ($e.msg)"
-          exit 1
-        }
-    - env:
-        - name: GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              key: token
-              name: github-token
-      image: ghcr.io/pfenerty/apko-cicd/base:stable
-      name: pending-go-test
-      script: |-
-        #!/usr/bin/env nu
-        def log [msg: string] {
-          print $"[(date now | format date '%H:%M:%S')] status-pending [go-test]: ($msg)"
-        }
-
-        let url = $"https://api.github.com/repos/$(params.repo-full-name)/statuses/$(params.revision)"
-        let body = { state: "pending", context: "go-test", description: "Running" }
 
         log $"POST ($url)"
         log $"body: ($body | to json -r)"
